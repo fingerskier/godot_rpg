@@ -6,10 +6,11 @@ export var Max_Speed = 50
 
 const DeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
 
+onready var hurtBox = $HurtBox
 onready var playerDetector = $PlayerDetectionZone
+onready var softCollision = $SoftCollision
 onready var sprite = $AnimatedSprite
 onready var stats = $Stats
-onready var hurtBox = $HurtBox
 
 enum {
 	IDLE,
@@ -44,6 +45,9 @@ func _physics_process(delta):
 
 		WANDER:
 			pass
+
+	if softCollision.is_colliding():
+		velocity += softCollision.get_push_vector() * delta * 400
 
 	sprite.flip_h = velocity.x < 0
 	velocity = move_and_slide(velocity)
