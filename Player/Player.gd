@@ -25,7 +25,7 @@ func _physics_process(delta):
 	match state:
 		MOVE: move_state(delta)
 		ROLL: pass
-		ATTACK: attack_state(delta)
+		ATTACK: attack_state()
 
 
 func move_state(delta):
@@ -50,7 +50,7 @@ func move_state(delta):
 		state = ATTACK
 
 
-func attack_state(delta):
+func attack_state():
 	velocity = Vector2.ZERO
 	animationState.travel("Attack")
 
