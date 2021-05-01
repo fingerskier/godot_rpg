@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+const DeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
+
 const FRICTION = 200
 
 onready var stats = $Stats
@@ -21,3 +23,6 @@ func _on_HurtBox_area_entered(area):
 
 func _on_Stats_no_health():
 	queue_free()
+	var deathEffect = DeathEffect.instance()
+	get_parent().add_child(deathEffect)
+	deathEffect.global_position = global_position
