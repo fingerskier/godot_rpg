@@ -6,6 +6,7 @@ export var Max_Speed = 50
 
 const DeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
 
+onready var blinker = $BlinkPlayer
 onready var hurtBox = $HurtBox
 onready var playerDetector = $PlayerDetectionZone
 onready var softCollision = $SoftCollision
@@ -68,6 +69,7 @@ func _on_HurtBox_area_entered(area):
 	stats.health -= area.damage
 	knockback = area.knockback_vector * 100
 	hurtBox.create_hit_effect()
+	hurtBox.start_invincibility(0.4)
 
 
 func _on_Stats_no_health():
@@ -75,3 +77,10 @@ func _on_Stats_no_health():
 	var deathEffect = DeathEffect.instance()
 	get_parent().add_child(deathEffect)
 	deathEffect.global_position = global_position
+
+
+func _on_HurtBox_invincibility_ended():
+	blinker.play("Stop")
+
+func _on_HurtBox_invincibility_started():
+	blinker.play("Start")
